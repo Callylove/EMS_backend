@@ -177,7 +177,7 @@ router.post('/login', (req, res) => {
       const token = jwt.sign({ role: 'admin', email: admin.email }, 'jwt_secret_key', { expiresIn: '1d' });
 
       // Set JWT token as a cookie (httpOnly for security)
-      res.cookie('token', token, { httpOnly: true });
+      res.cookie('token', token);
 
       return res.json({ loginStatus: true, role: 'admin' });
     } else {
@@ -202,7 +202,7 @@ router.post('/login', (req, res) => {
               const token = jwt.sign({ role: 'user', email: user.email }, 'jwt_secret_key', { expiresIn: '1d' });
 
               // Set JWT token as a cookie (httpOnly for security)
-              res.cookie('token', token, { httpOnly: true });
+              res.cookie('token', token);
 
               return res.json({ loginStatus: true, role: 'user' });
             } else {

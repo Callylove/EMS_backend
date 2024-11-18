@@ -8,7 +8,7 @@ import cookieParser from 'cookie-parser';
  // Add this line to parse cookies
 const app = express()
 app.use(cors({
-    origin:'http://localhost:5173',
+    origin:'https://ems-frontend-ivory.vercel.app',
     methods:['GET','POST','PUT','DELETE'],
     credentials: true
 }))
@@ -38,11 +38,11 @@ app.use('/admin', (req, res, next) => {
     res.status(404).json({ message: 'Route not found' });
   });
   
-  // Start the server
-  const PORT = process.env.PORT || 3000;
-  app.listen(PORT, () => {
-    console.log(`Server is running on port ${PORT}`);
-  });
+  // // Start the server
+  // const PORT = process.env.PORT || 3000;
+  // app.listen(PORT, () => {
+  //   console.log(`Server is running on port ${PORT}`);
+  // });
 // app.listen(3000, ()=> {
 //     console.log("Server is running!");
     

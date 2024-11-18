@@ -257,7 +257,7 @@ router.delete('/delete_admin/:id',(req,res)=>{
 // Logout Route in Express.js
 router.get('/logout', (req, res) => {
   // Clear the token cookie
-  res.clearCookie('token', { httpOnly: true, path: '/' });
+  res.clearCookie('token');
 
   // Send a response to the client that the logout was successful
   res.json({ Status: true });
