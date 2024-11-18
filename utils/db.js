@@ -1,9 +1,9 @@
 import mysql from 'mysql'
 const conn = mysql.createConnection({
-    host:'localhost',
-    user:'root',
-    password:'',
-    database:'employeems'
+    host:'sql12.freemysqlhosting.net',
+    user:'sql12745497',
+    password:'3wrjh1eAg6',
+    database:'sql12745497'
 })
 
 conn.connect(function(err){
