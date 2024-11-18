@@ -5,6 +5,7 @@ import { AdminRouter } from './Routes/AdminRoute.js'
 import { UserRouter } from './Routes/UserRoute.js'
 import { AuthRouter } from './Routes/AuthRoute.js'
 import cookieParser from 'cookie-parser';
+import conn from './utils/db.js'
  // Add this line to parse cookies
 const app = express()
 app.use(cors({
@@ -38,11 +39,12 @@ app.use('/admin', (req, res, next) => {
     res.status(404).json({ message: 'Route not found' });
   });
   
-  // // Start the server
-  // const PORT = process.env.PORT || 3000;
-  // app.listen(PORT, () => {
-  //   console.log(`Server is running on port ${PORT}`);
-  // });
+  // Start the server
+  const PORT = process.env.PORT || 3001;
+  app.listen(PORT, () => {
+    console.log(`Server is running on port ${PORT}`);
+    conn.ping((err)=> console.log(err))
+  });
 // app.listen(3000, ()=> {
 //     console.log("Server is running!");
     
