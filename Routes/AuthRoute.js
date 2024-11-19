@@ -315,7 +315,7 @@ router.get('/dashboard', (req, res) => {
   const token = req.cookies.token;
   jwt.verify(token, 'jwt_secret_key', (err, decoded) => {
     if (err) {
-      return res.status(403).json({ message: 'Invalid or expired token' });
+      return res.status(403).json({ message: 'Invalid or expired token', error: err });
     }
 
     // Attach the decoded role to the request object
