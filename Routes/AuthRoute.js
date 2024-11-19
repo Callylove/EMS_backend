@@ -239,18 +239,47 @@ function verifyToken(req, res, next) {
 }
 
 // Example of a route to get the role
-router.get('/dashboard', verifyToken, (req, res) => {
+// router.get('/dashboard', verifyToken, (req, res) => {
+//   // const role = req.user.role; // From the decoded JWT payload
+//   // console.log(role);
+//   const user = req.user 
+//   console.log(user);
+//   if(user){
+//     return res.json({ user });
+//   }
+// else {
+//   return res.json({error:'error fetching role'})
+// }
+  
+// });
+router.get('/dashboard', (req, res) => {
   // const role = req.user.role; // From the decoded JWT payload
   // console.log(role);
-  const user = req.user 
-  console.log(user);
-  if(user){
-    return res.json({ user });
-  }
-else {
-  return res.json({error:'error fetching role'})
-}
+  const token = req.cookies.token;
+  console.log(token);
   
-});
+  jwt.verify(token, 'jwt_secret_key', (err, decoded) => {
+    if (err) {
+      return res.status(403).json({ message: 'Invalid or expired token' });
+    }
 
+    // Attach the decoded role to the request object
+    req.user = decoded; // { role: 'admin', email: 'user@example.com' }
+    const user = req.user
+    console.log(user);
+    
+    return res.json({ user });
+
+  })// Proceed to the next middleware or route handler
+  
+  
+//   if(user){
+//     return res.json({ user });
+//   }
+// else {
+//   return res.json({error:'error fetching role'})
+// }
+  
+
+});
 export { router as AuthRouter };
