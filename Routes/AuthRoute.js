@@ -175,19 +175,11 @@ router.post('/login', (req, res) => {
     if (adminResult.length > 0) {
       const admin = adminResult[0];
       const token = jwt.sign({ role: 'admin', email: admin.email }, 'jwt_secret_key', { expiresIn: '1d' });
-      return res
-      .cookie("token", token, {
-        httpOnly: true,
-        secure: true,
-         sameSite: 'Strict',  
-         domain: '.vercel.app'
-      })
-      .status(200)
-      .json({ message: "Logged in successfully 😊 👌",loginStatus: true, role: 'admin'  });
-      // Set JWT token as a cookie (httpOnly for security)
-      // res.cookie('token', token);
 
-      // return res.json({ loginStatus: true, role: 'admin' });
+      // Set JWT token as a cookie (httpOnly for security)
+      res.cookie('token', token);
+
+      return res.json({ loginStatus: true, role: 'admin' });
     } else {
       // If not an admin, check if it's a user
       const userSql = "SELECT * FROM users WHERE email = ?";
@@ -260,34 +252,5 @@ else {
 }
   
 });
-// router.get('/dashboard', (req, res) => {
-//   // const role = req.user.role; // From the decoded JWT payload
-//   // console.log(role);
-//   const token = req.cookies.token;
-//   console.log(token);
-  
-//   jwt.verify(token, 'jwt_secret_key', (err, decoded) => {
-//     if (err) {
-//       return res.status(403).json({ message: 'Invalid or expired token' });
-//     }
 
-//     // Attach the decoded role to the request object
-//     req.user = decoded; // { role: 'admin', email: 'user@example.com' }
-//     const user = req.user
-//     console.log(user);
-    
-//     return res.json({ user });
-
-//   })// Proceed to the next middleware or route handler
-  
-  
-// //   if(user){
-// //     return res.json({ user });
-// //   }
-// // else {
-// //   return res.json({error:'error fetching role'})
-// // }
-  
-
-// });
 export { router as AuthRouter };
