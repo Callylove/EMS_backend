@@ -244,8 +244,13 @@ router.get('/dashboard', verifyToken, (req, res) => {
   // console.log(role);
   const user = req.user 
   console.log(user);
+  if(user){
+    return res.json({ user });
+  }
+else {
+  return res.json({error:'error fetching role'})
+}
   
-  return res.json({ user });
 });
 
 export { router as AuthRouter };

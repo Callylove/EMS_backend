@@ -7,9 +7,10 @@ import { AuthRouter } from './Routes/AuthRoute.js'
 import cookieParser from 'cookie-parser';
 import conn from './utils/db.js'
  // Add this line to parse cookies
+ //origin:'https://ems-frontend-ivory.vercel.app',
 const app = express()
 app.use(cors({
-    origin:'https://ems-frontend-ivory.vercel.app',
+  origin:'https://ems-frontend-ivory.vercel.app',
     methods:['GET','POST','PUT','DELETE'],
     credentials: true
 }))
