@@ -174,10 +174,17 @@ router.post('/login', (req, res) => {
     // If the admin exists
     if (adminResult.length > 0) {
       const admin = adminResult[0];
-      const token = jwt.sign({ role: 'admin', email: admin.email }, 'jwt_secret_key', { expiresIn: '1d' });
-
+      // const token = jwt.sign({ role: 'admin', email: admin.email }, 'jwt_secret_key', { expiresIn: '1d' });
+      const payload = { email: email, role: 'admin' };
+      const token = jwt.sign(payload, 'jwt_secret_key', { expiresIn: '1h' });
       // Set JWT token as a cookie (httpOnly for security)
-      res.cookie('token', token);
+      // res.cookie('token', token);
+      res.cookie('token', token, {
+        httpOnly: true, // Prevents JavaScript access (for security reasons)
+        secure: process.env.NODE_ENV === 'production', // Set to true in production for HTTPS
+        sameSite: 'Strict', // Ensures the cookie is only sent to the same origin
+        maxAge: 60 * 60 * 1000 // Expiration time (1 hour)
+      });
 
       return res.json({ loginStatus: true, role: 'admin' });
     } else {
