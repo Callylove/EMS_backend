@@ -223,6 +223,8 @@ router.post('/login', (req, res) => {
  
 // Check if the email belongs to an admin
 const adminSql = "SELECT * FROM admin WHERE email = ? AND password = ?";
+
+
 conn.query(adminSql, [email, password], (err, adminResult) => {
   if (err) {
     return res.json({ loginStatus: false, error: 'Database error' });
