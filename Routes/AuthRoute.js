@@ -309,31 +309,57 @@ function verifyToken(req, res, next) {
 // }
   
 // });
+// router.get('/dashboard', (req, res) => {
+//   // const role = req.user.role; // From the decoded JWT payload
+//   // console.log(role);
+//   const token = req.cookies.token;
+//   jwt.verify(token, 'jwt_secret_key', (err, decoded) => {
+//     if (err) {
+//       return res.status(403).json({ message: 'Invalid or expired token', error: err });
+//     }
+
+//     // Attach the decoded role to the request object
+//     req.user = decoded; // { role: 'admin', email: 'user@example.com' }
+//     const user = req.user
+//     return res.json({ user });
+
+//   })// Proceed to the next middleware or route handler
+  
+  
+// //   if(user){
+// //     return res.json({ user });
+// //   }
+// // else {
+// //   return res.json({error:'error fetching role'})
+// // }
+  
+
+// });
 router.get('/dashboard', (req, res) => {
-  // const role = req.user.role; // From the decoded JWT payload
-  // console.log(role);
+  // Get the token from cookies
   const token = req.cookies.token;
+
+  if (!token) {
+    // If the token is not provided, return an error message
+    return res.status(401).json({ message: 'Token not provided' });
+  }
+
+  // Verify the token using the secret key
   jwt.verify(token, 'jwt_secret_key', (err, decoded) => {
     if (err) {
-      return res.status(403).json({ message: 'Invalid or expired token', error: err });
+      // If there is an error (invalid or expired token), return an error message
+      return res.status(403).json({
+        message: 'Invalid or expired token',
+        error: err.message,  // Provide error details
+      });
     }
 
-    // Attach the decoded role to the request object
+    // If the token is valid, attach the decoded user info to the request object
     req.user = decoded; // { role: 'admin', email: 'user@example.com' }
-    const user = req.user
+    const user = req.user;
+
+    // Send the user data as a response
     return res.json({ user });
-
-  })// Proceed to the next middleware or route handler
-  
-  
-//   if(user){
-//     return res.json({ user });
-//   }
-// else {
-//   return res.json({error:'error fetching role'})
-// }
-  
-
+  });
 });
-
 export { router as AuthRouter };
