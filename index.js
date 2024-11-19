@@ -35,18 +35,18 @@ app.use('/admin', (req, res, next) => {
     });
   });
 
-  app.use((req, res, next) => {
-    const token = req.cookies.token || req.headers.authorization?.split(' ')[1];
-    if (token) {
-      jwt.verify(token, 'your_jwt_secret', (err, user) => {
-        if (err) return res.status(403).send('Forbidden');
-        req.user = user;  // Set user data to the request object
-        next();
-      });
-    } else {
-      return res.status(401).send('Unauthorized');
-    }
-  });
+  // app.use((req, res, next) => {
+  //   const token = req.cookies.token || req.headers.authorization?.split(' ')[1];
+  //   if (token) {
+  //     jwt.verify(token, 'your_jwt_secret', (err, user) => {
+  //       if (err) return res.status(403).send('Forbidden');
+  //       req.user = user;  // Set user data to the request object
+  //       next();
+  //     });
+  //   } else {
+  //     return res.status(401).send('Unauthorized');
+  //   }
+  // });
   
   // Your 404 handler
   app.use((req, res) => {

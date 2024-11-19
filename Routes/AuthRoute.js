@@ -178,7 +178,9 @@ router.post('/login', (req, res) => {
       return res
       .cookie("token", token, {
         httpOnly: true,
-        secure: process.env.NODE_ENV === "production",
+        secure: true,
+         sameSite: 'Strict',  
+         domain: '.vercel.app'
       })
       .status(200)
       .json({ message: "Logged in successfully 😊 👌",loginStatus: true, role: 'admin'  });
