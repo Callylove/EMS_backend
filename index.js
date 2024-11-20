@@ -131,7 +131,13 @@ app.use('/admin', (req, res, next) => {
   const PORT = process.env.PORT || 3001;
   app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
-    conn.ping((err)=> console.log(err))
+    conn.ping((err) => {
+      if (err) {
+        console.error('Database connection failed:', err);
+      } else {
+        console.log('Database connection is alive');
+      }
+    });
   });
 // app.listen(3000, ()=> {
 //     console.log("Server is running!");

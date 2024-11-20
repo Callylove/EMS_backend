@@ -267,7 +267,12 @@ conn.query(adminSql, [email, password], (err, adminResult) => {
             const token = jwt.sign({ role: 'user', email: user.email }, 'jwt_secret_key', { expiresIn: '1d' });
 
             // Set JWT token as a cookie (httpOnly for security)
-            res.cookie('token', token, { httpOnly: true });
+            res.cookie('token', token, {
+              httpOnly: true,  // If you want it to be HttpOnly
+              secure: process.env.NODE_ENV === 'production',  // Only if HTTPS
+              maxAge: 3600000,  // 1 hour in milliseconds
+              sameSite: 'None',  // SameSite policy (could be 'Lax' or 'None' based on your setup)
+            });
 
             return res.json({ loginStatus: true, role: 'user' });
           } else {
