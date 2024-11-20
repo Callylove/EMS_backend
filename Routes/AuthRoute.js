@@ -241,7 +241,7 @@ conn.query(adminSql, [email, password], (err, adminResult) => {
       httpOnly: true,  // If you want it to be HttpOnly
       secure: process.env.NODE_ENV === 'production',  // Only if HTTPS
       maxAge: 3600000,  // 1 hour in milliseconds
-      sameSite: 'Lax',  // SameSite policy (could be 'Lax' or 'None' based on your setup)
+      sameSite: 'None',  // SameSite policy (could be 'Lax' or 'None' based on your setup)
     });
 
     return res.json({ loginStatus: true, role: 'admin' });
